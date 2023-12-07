@@ -1,0 +1,19 @@
+{
+  "name": "bytebite",
+  "version": "1.0.0",
+  "description": "ByteBite, a culinary haven founded on December 1, 2023. At ByteBite, we marry innovation and tradition, offering a delectable fusion of flavors that redefine the dining experience.",
+  "main": "chatbot",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/dialogflow": "^6.2.0",
+    "dialogflow-fulfillment": "^0.6.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.7",
+    "openai": "^4.20.1"
+  }
+}
