@@ -113,7 +113,7 @@ webApp.post('/chatbot_implement', async (req, res) => {
       { title: 'Long Button', message: 'Message for long button' },
     ],
   };
-  agent.add(new Payload('kommunicate', payload));
+  agent.add(new Payload('DEFAULT', payload));
 
   }
 
