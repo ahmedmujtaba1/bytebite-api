@@ -104,26 +104,17 @@ webApp.post('/chatbot_implement', async (req, res) => {
 
   function welcome_intent(agent){
     // agent.add('Hi, I am your virtual ByteBite personal AI assistant. How are you doing today?')
-    agent.payload({"message": "Hi, I am your virtual ByteBite personal AI assistant. How are you doing today?",
-    "platform": "kommunicate",
-    "metadata": {
-        "contentType": "300",
-        "templateId": "6",
-        "payload": [
-         {
-            "title": "Example 1",
-            "message": "Message for Example 1."
-        },
-        {
-            "title": "Example 1",
-            "message": "Message for Example 2"
-        },
-        {
-            "title": "Example for a long button",
-            "message": "Message for long button"
-        }
-       ]
-    }})
+      const payload = {
+    contentType: '300',
+    templateId: '6',
+    payload: [
+      { title: 'Example 1', message: 'Message for Example 1.' },
+      { title: 'Example 2', message: 'Message for Example 2' },
+      { title: 'Long Button', message: 'Message for long button' },
+    ],
+  };
+  agent.add(new Payload('kommunicate', payload));
+
   }
 
   let intentMap = new Map();
