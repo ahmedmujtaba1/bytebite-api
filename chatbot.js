@@ -104,16 +104,6 @@ webApp.post('/chatbot_implement', async (req, res) => {
 
   function welcome_intent(agent){
     // agent.add('Hi, I am your virtual ByteBite personal AI assistant. How are you doing today?')
-      const payload = {
-    contentType: '300',
-    templateId: '6',
-    payload: [
-      { title: 'Example 1', message: 'Message for Example 1.' },
-      { title: 'Example 2', message: 'Message for Example 2' },
-      { title: 'Long Button', message: 'Message for long button' },
-    ],
-  };
-  agent.add(new Payload('DEFAULT', payload));
 
   }
 
