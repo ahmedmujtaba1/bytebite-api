@@ -1,5 +1,5 @@
 const express = require('express');
-const { WebhookClient, Suggestion, Payload } = require("dialogflow-fulfillment");
+const { WebhookClient, Suggestion } = require("dialogflow-fulfillment");
 const { Configuration, OpenAI } = require("openai");
 require('dotenv').config();
 const nodemailer = require('nodemailer');
@@ -87,6 +87,7 @@ webApp.post('/chatbot_implement', async (req, res) => {
     });
 
     var mailOptions = {
+      
       from: process.env.GMAIL_EMAIL,
       to: 'bytebite_order@proton.me',
       subject: 'Congratulations, We got another entry for the order from your website',
@@ -103,13 +104,13 @@ webApp.post('/chatbot_implement', async (req, res) => {
   }
 
   function welcome_intent(agent){
-    // agent.add('Hi, I am your virtual ByteBite personal AI assistant. How are you doing today?')
-
+    agent.add('Hi, I am your virtual ByteBite personal AI assistant. How are you doing today?')
+    
   }
 
   let intentMap = new Map();
   intentMap.set("ordering", ordering);
-  intentMap.set("Default Welcome Intent", welcome_intent);
+  // intentMap.set("welcome_intent", welcome_intent);
   intentMap.set("Default Fallback Intent", fallback_intent);
   agent.handleRequest(intentMap);
 });
