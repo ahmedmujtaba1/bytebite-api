@@ -125,7 +125,6 @@ webApp.post('/chatbot_implement', async (req, res) => {
        ]
     }})
   }
-  }
 
   let intentMap = new Map();
   intentMap.set("ordering", ordering);
