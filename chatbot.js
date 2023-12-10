@@ -104,7 +104,7 @@ webApp.post('/chatbot_implement', async (req, res) => {
 
   function welcome_intent(agent){
     // agent.add('Hi, I am your virtual ByteBite personal AI assistant. How are you doing today?')
-    agent.add({"message": "Hi, I am your virtual ByteBite personal AI assistant. How are you doing today?",
+    agent.payload({"message": "Hi, I am your virtual ByteBite personal AI assistant. How are you doing today?",
     "platform": "kommunicate",
     "metadata": {
         "contentType": "300",
