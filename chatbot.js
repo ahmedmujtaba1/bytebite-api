@@ -1,5 +1,5 @@
 const express = require('express');
-const { WebhookClient, Suggestion } = require("dialogflow-fulfillment");
+const { WebhookClient, Suggestion, Payload } = require("dialogflow-fulfillment");
 const { Configuration, OpenAI } = require("openai");
 require('dotenv').config();
 const nodemailer = require('nodemailer');
