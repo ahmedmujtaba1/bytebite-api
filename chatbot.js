@@ -105,6 +105,7 @@ webApp.post('/chatbot_implement', async (req, res) => {
     console.log("intent => fallback")
     intent = "fallback"
     let result = await textGeneration(queryText);
+    addDataToTable(queryText, result.response, intent, useChatGPT)
     if (result.status == 1) {
       agent.add(result.response);
     } 
