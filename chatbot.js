@@ -1,8 +1,41 @@
 const express = require('express');
+const { createClient } = require("@supabase/supabase-js");
 const { WebhookClient, Suggestion } = require("dialogflow-fulfillment");
 const { Configuration, OpenAI } = require("openai");
 require('dotenv').config();
 const nodemailer = require('nodemailer');
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
+);
+
+const tableName = "chat_data"; 
+
+async function addDataToTable(question, answer, intent, useChatGPT) {
+  try {
+    // Data to be inserted into the table
+    const dataToInsert = [
+      {
+        question: question,
+        answer: answer,
+        intent: intent,
+        use_chatgpt: useChatGPT,
+      },
+    ];
+
+    // Insert data into the table
+    const { data, error } = await supabase.from(tableName).insert(dataToInsert);
+
+    if (error) {
+      throw error;
+    }
+
+    console.log("Data inserted successfully");
+  } catch (error) {
+    console.error("Error adding data to the table:", error.message);
+  }
+}
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
@@ -65,19 +98,26 @@ webApp.post('/chatbot_implement', async (req, res) => {
   const agent = new WebhookClient({ request: req, response: res });
   let action = req.body.queryResult.action;
   let queryText = req.body.queryResult.queryText;
-
- 
+  let intent = null
+  
   async function fallback_intent(agent){
+    let useChatGPT = true
     console.log("intent => fallback")
+    intent = "fallback"
     let result = await textGeneration(queryText);
     if (result.status == 1) {
       agent.add(result.response);
     } 
+
   }
   function ordering(agent){
+    let useChatGPT = false
     console.log("intent => ordering")
+    intent = "ordering"
     const { person, phone, address, details } = agent.parameters;
+    const answer = `Hello ${person.name}, thank you for placing an order with us! Your order details are ${details} Your order will be delivered to ${address}. We have noted your phone number as ${phone}. We appreciate your order and look forward to serving you. Thank you!`
     agent.add(`Hello ${person.name}, thank you for placing an order with us! Your order details are ${details} Your order will be delivered to ${address}. We have noted your phone number as ${phone}. We appreciate your order and look forward to serving you. Thank you!`);
+    addDataToTable("I want to order", answer, intent, useChatGPT)
     var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
